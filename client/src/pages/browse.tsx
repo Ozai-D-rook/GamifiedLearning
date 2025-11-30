@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Link } from "wouter";
-import { BookOpen, Gamepad2, Clock, Play, Search, BookMarked } from "lucide-react";
+import { BookOpen, Gamepad2, Clock, Play, Search } from "lucide-react";
 import { useState } from "react";
 import type { Quiz } from "@shared/schema";
 
@@ -72,20 +72,12 @@ export default function BrowsePage() {
                     {(quiz.timePerQuestion || 30)} sec per question
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <Link href={`/browse/${quiz.id}/lesson`}>
-                    <Button variant="default" className="w-full gap-2" data-testid={`button-read-lesson-${quiz.id}`}>
-                      <BookMarked className="h-4 w-4" />
-                      Read & Quiz
-                    </Button>
-                  </Link>
-                  <Link href={`/quizzes/${quiz.id}`}>
-                    <Button variant="outline" className="w-full gap-2" data-testid={`button-start-quiz-${quiz.id}`}>
-                      <Play className="h-4 w-4" />
-                      Quick Quiz
-                    </Button>
-                  </Link>
-                </div>
+                <Link href={`/quizzes/${quiz.id}`}>
+                  <Button className="w-full gap-2" data-testid={`button-start-quiz-${quiz.id}`}>
+                    <Play className="h-4 w-4" />
+                    Start Quiz
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           ))}
