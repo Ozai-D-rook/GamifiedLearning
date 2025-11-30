@@ -1,0 +1,19 @@
+{
+  "name": "QuizBlitz - Gamified Learning",
+  "short_name": "QuizBlitz",
+  "description": "Create AI-powered quizzes and play engaging Kahoot-style games",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "games"]
+}
