@@ -1,0 +1,155 @@
+You are an expert full-stack Next.js engineer. 
+Build a clean, stable Replit project for a gamified learning web application (Kahoot-style) using:
+
+- Next.js 14 (app router)
+- Supabase (auth + database + storage)
+- Gemini API for quiz generation
+- Progressive Web App (PWA) support
+- TypeScript
+- TailwindCSS
+- Shadcn UI
+
+CRITICAL REQUIREMENT:
+Avoid the Supabase warning:
+“Multiple GoTrueClient instances detected in the same browser context.”
+To do this, apply the following architecture strictly.
+
+──────────────────────────────────────────
+ARCHITECTURE RULES (DO NOT BREAK THESE)
+──────────────────────────────────────────
+
+1. Create EXACTLY ONE supabase browser client.
+   File: /lib/supabase-browser.ts
+
+------------------------------------------
+"use client";
+import { createClient } from "@supabase/supabase-js";
+
+export const supabaseBrowser = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+);
+------------------------------------------
+
+2. Create EXACTLY ONE supabase server client.
+   File: /lib/supabase-server.ts
+
+------------------------------------------
+import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/auth-helpers-nextjs";
+
+export function supabaseServer() {
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { cookies }
+  );
+}
+------------------------------------------
+
+3. NEVER call `createClient()` anywhere else.
+4. NEVER mix createBrowserSupabaseClient + createClient.
+5. NEVER create Supabase clients inside components.
+6. Import ONLY supabaseBrowser or supabaseServer.
+
+──────────────────────────────────────────
+OTHER REQUIRED SETUP
+──────────────────────────────────────────
+
+A. Gemini Client
+Create: /lib/gemini.ts
+
+------------------------------------------
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+export const gemini = new GoogleGenerativeAI(
+  process.env.GEMINI_API_KEY!
+).getGenerativeModel({ model: "gemini-1.5-flash" });
+------------------------------------------
+
+B. Convert teacher-uploaded lesson text → auto-generated quiz
+Create API route: /app/api/generate-quiz/route.ts
+
+------------------------------------------
+import { NextResponse } from "next/server";
+import { gemini } from "@/lib/gemini";
+
+export async function POST(req: Request) {
+  const { lessonText } = await req.json();
+
+  const prompt = `
+  Convert this lesson content into 10 gamified multiple-choice questions.
+  Format:
+  {
+    "questions": [
+      { 
+        "question": "...", 
+        "options": ["A", "B", "C", "D"],
+        "answer": "A"
+      }
+    ]
+  }
+  Lesson:
+  ${lessonText}
+  `;
+
+  const response = await gemini.generateContent(prompt);
+  const json = JSON.parse(response.response.text());
+
+  return NextResponse.json(json);
+}
+------------------------------------------
+
+C. Authentication Pages
+Use Supabase password login only.
+
+D. Database Schema
+Create a SQL seed file with:
+
+- users
+- lessons
+- quizzes
+- questions
+- answers
+- game_sessions
+- game_players
+- leaderboards
+- badges
+
+E. UI Requirements
+Use Shadcn UI components:
+- Sidebar navigation
+- Teacher dashboard
+- Student dashboard
+- Game lobby
+- Live game view
+- Leaderboard view
+
+F. PWA Support
+Configure:
+- manifest.json
+- icons
+- service worker with next-pwa or a hand-written SW
+
+G. Environment Variables (Replit secrets)
+Use Replit "Secrets" tool to set:
+
+GEMINI_API_KEY  
+NEXT_PUBLIC_SUPABASE_URL  
+NEXT_PUBLIC_SUPABASE_ANON_KEY  
+SUPABASE_SERVICE_ROLE_KEY  
+NEXTAUTH_SECRET (any random 32 chars)  
+NEXTAUTH_URL = "https://<your-replit-url>.repl.co"  
+NEXT_PUBLIC_APP_URL = same as above  
+
+H. App MUST run without GoTrueClient duplication.
+
+──────────────────────────────────────────
+DELIVERABLE
+──────────────────────────────────────────
+
+Generate the full Next.js folder structure, all key files, boilerplate code, and ensure authentication, quiz generation, lesson upload, and PWA setup work correctly—ALL based on the architecture above.
+
+Do NOT create duplicate Supabase clients. 
+Do NOT initialize Supabase in components.
+Do NOT mix helper libraries incorrectly.
