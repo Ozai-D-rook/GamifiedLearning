@@ -44,6 +44,7 @@ const teacherMenuItems = [
 
 const studentMenuItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { title: "Browse", url: "/browse", icon: BookOpen },
   { title: "Join Game", url: "/join", icon: Play },
   { title: "My Badges", url: "/badges", icon: Award },
   { title: "Leaderboards", url: "/leaderboards", icon: Trophy },

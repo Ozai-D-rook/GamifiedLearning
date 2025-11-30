@@ -40,6 +40,7 @@ export interface IStorage {
   getQuiz(id: string): Promise<Quiz | undefined>;
   getQuizzesByTeacher(teacherId: string): Promise<Quiz[]>;
   getQuizzesByLesson(lessonId: string): Promise<Quiz[]>;
+  getAllPublishedQuizzes(): Promise<Quiz[]>;
   createQuiz(quiz: InsertQuiz): Promise<Quiz>;
   deleteQuiz(id: string): Promise<void>;
 
@@ -219,6 +220,12 @@ export class MemStorage implements IStorage {
   async getQuizzesByLesson(lessonId: string): Promise<Quiz[]> {
     return Array.from(this.quizzes.values())
       .filter((quiz) => quiz.lessonId === lessonId)
+      .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+  }
+
+  async getAllPublishedQuizzes(): Promise<Quiz[]> {
+    return Array.from(this.quizzes.values())
+      .filter((quiz) => quiz.isPublished)
       .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
   }
 

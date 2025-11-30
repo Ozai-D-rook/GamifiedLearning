@@ -16,6 +16,7 @@ import NewLessonPage from "@/pages/lesson-new";
 import LessonDetailPage from "@/pages/lesson-detail";
 import QuizzesPage from "@/pages/quizzes";
 import QuizDetailPage from "@/pages/quiz-detail";
+import BrowsePage from "@/pages/browse";
 import JoinGamePage from "@/pages/join";
 import HostLobbyPage from "@/pages/host-lobby";
 import HostGamePage from "@/pages/host-game";
@@ -88,6 +89,9 @@ function Router() {
       </Route>
       <Route path="/quizzes/:id">
         <ProtectedRoute component={QuizDetailPage} />
+      </Route>
+      <Route path="/browse">
+        <ProtectedRoute component={BrowsePage} />
       </Route>
       <Route path="/leaderboards">
         <ProtectedRoute component={LeaderboardsPage} />

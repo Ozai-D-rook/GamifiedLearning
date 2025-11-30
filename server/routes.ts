@@ -201,6 +201,12 @@ export async function registerRoutes(
 
   // ==================== QUIZZES ROUTES ====================
 
+  app.get("/api/quizzes/available", async (req, res) => {
+    // Get all published quizzes for students to browse
+    const allQuizzes = await storage.getAllPublishedQuizzes();
+    res.json(allQuizzes);
+  });
+
   app.get("/api/quizzes", requireAuth, async (req, res) => {
     const lessonId = req.query.lessonId as string | undefined;
     if (lessonId) {
