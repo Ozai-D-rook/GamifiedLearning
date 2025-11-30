@@ -1,7 +1,7 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import session from "express-session";
-import { storage } from "./storage";
+import { storage } from "./storage-db";
 import { generateQuizQuestions } from "./gemini";
 import {
   loginSchema,
@@ -59,7 +59,7 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Session setup
+  // Session setup with in-memory store
   const MemStore = MemoryStore(session);
   app.use(
     session({
