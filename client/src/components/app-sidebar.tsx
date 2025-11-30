@@ -33,12 +33,14 @@ import {
   ChevronUp,
   Plus,
   Play,
+  Users,
 } from "lucide-react";
 
 const teacherMenuItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "My Lessons", url: "/lessons", icon: BookOpen },
   { title: "My Quizzes", url: "/quizzes", icon: Gamepad2 },
+  { title: "Students", url: "/students", icon: Users },
   { title: "Leaderboards", url: "/leaderboards", icon: Trophy },
 ];
 

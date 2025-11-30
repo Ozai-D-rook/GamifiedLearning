@@ -155,6 +155,30 @@ export async function registerRoutes(
     res.json({ user: safeUser });
   });
 
+  // ==================== ADMIN/TEACHER ROUTES ====================
+
+  app.get("/api/students", requireAuth, async (req, res) => {
+    const user = await storage.getUser(req.session.userId!);
+    if (user?.role !== "teacher") {
+      return res.status(403).json({ error: "Only teachers can view students" });
+    }
+    const students = await storage.getAllStudents();
+    res.json(students.map((s) => ({ ...s, password: undefined })));
+  });
+
+  app.delete("/api/students/:id", requireAuth, async (req, res) => {
+    const user = await storage.getUser(req.session.userId!);
+    if (user?.role !== "teacher") {
+      return res.status(403).json({ error: "Only teachers can manage students" });
+    }
+    const studentToDelete = await storage.getUser(req.params.id);
+    if (!studentToDelete || studentToDelete.role !== "student") {
+      return res.status(404).json({ error: "Student not found" });
+    }
+    await storage.deleteUser(req.params.id);
+    res.json({ success: true });
+  });
+
   // ==================== LESSONS ROUTES ====================
 
   app.get("/api/lessons", requireAuth, async (req, res) => {

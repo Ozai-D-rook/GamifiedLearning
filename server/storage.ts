@@ -26,6 +26,8 @@ export interface IStorage {
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: string, updates: Partial<User>): Promise<User | undefined>;
+  getAllStudents(): Promise<User[]>;
+  deleteUser(id: string): Promise<void>;
   getTopUsersByScore(limit: number): Promise<User[]>;
   getTopUsersByGames(limit: number): Promise<User[]>;
   getTopUsersByWins(limit: number): Promise<User[]>;
@@ -155,6 +157,16 @@ export class MemStorage implements IStorage {
     const updated = { ...user, ...updates };
     this.users.set(id, updated);
     return updated;
+  }
+
+  async getAllStudents(): Promise<User[]> {
+    return Array.from(this.users.values())
+      .filter((u) => u.role === "student")
+      .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    this.users.delete(id);
   }
 
   async getTopUsersByScore(limit: number): Promise<User[]> {
