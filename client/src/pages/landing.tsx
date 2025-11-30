@@ -38,7 +38,7 @@ export default function LandingPage() {
             </div>
             <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6" data-testid="text-hero-title">
               Make Learning
-              <span className="text-primary block">Unforgettable</span>
+              <span className="text-primary block">Unforgettable with Justina Garba</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto" data-testid="text-hero-subtitle">
               Create engaging quizzes from any lesson content with AI. Host live Kahoot-style games that make students excited to learn.
