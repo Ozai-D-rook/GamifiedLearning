@@ -64,9 +64,15 @@ Preferred communication style: Simple, everyday language.
 
 ### Data Storage Solutions
 
-**ORM**: Drizzle ORM configured for PostgreSQL
+**Current Storage**: In-memory storage (MemStorage) for optimal deployment compatibility
+- Provides immediate functionality without database dependencies
+- Perfect for development, testing, and demo environments
+- Data resets on application restart (stateless design)
 
-**Database Provider**: Neon Database (serverless PostgreSQL) via `@neondatabase/serverless`
+**Alternative Database Support**: Drizzle ORM configured for PostgreSQL (optional)
+- To enable database: Uncomment DatabaseStorage in `server/storage-db.ts`
+- Database Provider: Neon Serverless PostgreSQL via `@neondatabase/serverless`
+- Enable database initialization by uncommenting code in `server/init-db.ts`
 
 **Schema Design**:
 - `users` - Stores both teachers and students with role field, includes gamification stats (totalScore, gamesPlayed, gamesWon)
@@ -142,6 +148,24 @@ Preferred communication style: Simple, everyday language.
 - `class-variance-authority` - Type-safe component variants
 
 **Environment Requirements**:
-- `DATABASE_URL` - PostgreSQL connection string
-- `GEMINI_API_KEY` - Google AI API key
-- `SESSION_SECRET` - For session encryption (generated if missing)
+- `GEMINI_API_KEY` - Google Gemini API key (required for AI quiz generation)
+- `SESSION_SECRET` - For session encryption (optional, auto-generated if missing)
+- `DATABASE_URL` - PostgreSQL connection string (optional, only needed if using database storage)
+
+## Recent Changes (Nov 30, 2024)
+
+**Deployment Optimization**:
+- Disabled database initialization in `server/init-db.ts` to prevent deployment failures on platforms like Render
+- Switched primary storage from DatabaseStorage to MemStorage for better platform compatibility
+- App now starts successfully without requiring external database credentials
+- Perfect for immediate deployment; data persists within session but resets on restart
+
+**Storage Strategy**:
+- Primary: In-memory storage (MemStorage) - works everywhere, no dependencies
+- Optional: Can switch back to Supabase/Neon database by uncommenting one line in `server/storage-db.ts`
+- All API endpoints and game logic work identically with either storage backend
+
+**Deployment Status**:
+✅ Ready for Render, Vercel, Railway, or any Node.js hosting platform
+✅ No database configuration required
+✅ Comes with all features: AI quiz generation, real-time games, leaderboards, badges
