@@ -14,7 +14,7 @@ export default function LandingPage() {
             <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
               <Zap className="h-6 w-6 text-primary-foreground" />
             </div>
-            <span className="font-display text-xl font-bold" data-testid="text-logo">QuizBlitz</span>
+            <span className="font-display text-xl font-bold" data-testid="text-logo">QuizBlitz BY JUSTINA GARBA</span>
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />
@@ -27,7 +27,6 @@ export default function LandingPage() {
           </div>
         </div>
       </header>
-
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 md:py-32">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/10" />
@@ -60,7 +59,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
       {/* Features Section */}
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -142,7 +140,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
       {/* How it works */}
       <section className="py-20">
         <div className="container mx-auto px-4">
@@ -184,7 +181,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-
       {/* CTA Section */}
       <section className="py-20 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
@@ -201,7 +197,6 @@ export default function LandingPage() {
           </Link>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="py-8 border-t">
         <div className="container mx-auto px-4">
