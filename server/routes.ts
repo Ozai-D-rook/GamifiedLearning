@@ -103,7 +103,8 @@ export async function registerRoutes(
       req.session.userId = user.id;
       const { password: _, ...safeUser } = user;
       res.json({ user: safeUser });
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Registration error:", error?.message || error);
       if (error instanceof z.ZodError) {
         return res.status(400).json({ error: error.errors[0].message });
       }
@@ -128,7 +129,8 @@ export async function registerRoutes(
       req.session.userId = user.id;
       const { password: _, ...safeUser } = user;
       res.json({ user: safeUser });
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Login error:", error?.message || error);
       if (error instanceof z.ZodError) {
         return res.status(400).json({ error: error.errors[0].message });
       }

@@ -325,4 +325,10 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new DatabaseStorage();
+// Use MemStorage as fallback when database is unavailable
+// If you want to use DatabaseStorage with Supabase, uncomment the line below:
+// export const storage = new DatabaseStorage();
+
+// For now, use in-memory storage for better reliability
+import { MemStorage } from "./storage";
+export const storage = new MemStorage();
