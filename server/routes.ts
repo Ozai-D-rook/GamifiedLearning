@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import session from "express-session";
 import { storage } from "./storage-db";
 import { generateQuizQuestions } from "./gemini";
+import { initializeDatabase } from "./init-db";
 import {
   loginSchema,
   registerSchema,
@@ -59,6 +60,9 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  // Initialize database and seed badges
+  await initializeDatabase();
+
   // Session setup with in-memory store
   const MemStore = MemoryStore(session);
   app.use(
