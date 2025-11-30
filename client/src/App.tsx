@@ -18,6 +18,7 @@ import QuizzesPage from "@/pages/quizzes";
 import QuizDetailPage from "@/pages/quiz-detail";
 import BrowsePage from "@/pages/browse";
 import StudentsPage from "@/pages/students";
+import LessonReaderPage from "@/pages/lesson-reader";
 import JoinGamePage from "@/pages/join";
 import HostLobbyPage from "@/pages/host-lobby";
 import HostGamePage from "@/pages/host-game";
@@ -93,6 +94,9 @@ function Router() {
       </Route>
       <Route path="/browse">
         <ProtectedRoute component={BrowsePage} />
+      </Route>
+      <Route path="/browse/:quizId/lesson">
+        <ProtectedRoute component={LessonReaderPage} />
       </Route>
       <Route path="/students">
         <ProtectedRoute component={StudentsPage} />

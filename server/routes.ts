@@ -186,15 +186,21 @@ export async function registerRoutes(
     res.json(lessons);
   });
 
-  app.get("/api/lessons/:id", requireAuth, async (req, res) => {
+  app.get("/api/lessons/:id", async (req, res) => {
     const lesson = await storage.getLesson(req.params.id);
     if (!lesson) {
       return res.status(404).json({ error: "Lesson not found" });
     }
-    if (lesson.teacherId !== req.session.userId) {
-      return res.status(403).json({ error: "Forbidden" });
+    // Students can read any published lesson (via quiz)
+    // Teachers can read their own lessons
+    if (req.session.userId && lesson.teacherId === req.session.userId) {
+      return res.json(lesson);
     }
-    res.json(lesson);
+    // Check if student is accessing via a quiz
+    if (req.query.fromQuiz === "true") {
+      return res.json(lesson);
+    }
+    return res.status(403).json({ error: "Forbidden" });
   });
 
   app.post("/api/lessons", requireAuth, async (req, res) => {
