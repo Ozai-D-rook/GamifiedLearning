@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
+  Zap,
   LayoutDashboard,
   BookOpen,
   Gamepad2,
@@ -34,7 +35,6 @@ import {
   Play,
   Users,
 } from "lucide-react";
-import logoImg from "@assets/image_1764530917836.png";
 
 const teacherMenuItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -77,7 +77,10 @@ export function AppSidebar() {
       <SidebarHeader className="p-4">
         <Link href="/dashboard">
           <div className="flex items-center gap-2 cursor-pointer">
-            <img src={logoImg} alt="QuizBlitz Logo" className="h-10 w-auto" data-testid="img-sidebar-logo" />
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+              <Zap className="h-6 w-6 text-primary-foreground" />
+            </div>
+            <span className="font-display text-xl font-bold">QuizBlitz</span>
           </div>
         </Link>
       </SidebarHeader>
