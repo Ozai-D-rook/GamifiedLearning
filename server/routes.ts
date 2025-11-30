@@ -569,25 +569,45 @@ export async function registerRoutes(
   // ==================== LEADERBOARD ROUTES ====================
 
   app.get("/api/leaderboard/score", async (req, res) => {
-    const users = await storage.getTopUsersByScore(20);
-    res.json(users.map((u) => ({ ...u, password: undefined })));
+    try {
+      const users = await storage.getTopUsersByScore(20);
+      res.json(users.map((u) => ({ ...u, password: undefined })));
+    } catch (error) {
+      console.error("Leaderboard score fetch error:", error);
+      res.json([]);
+    }
   });
 
   app.get("/api/leaderboard/games", async (req, res) => {
-    const users = await storage.getTopUsersByGames(20);
-    res.json(users.map((u) => ({ ...u, password: undefined })));
+    try {
+      const users = await storage.getTopUsersByGames(20);
+      res.json(users.map((u) => ({ ...u, password: undefined })));
+    } catch (error) {
+      console.error("Leaderboard games fetch error:", error);
+      res.json([]);
+    }
   });
 
   app.get("/api/leaderboard/wins", async (req, res) => {
-    const users = await storage.getTopUsersByWins(20);
-    res.json(users.map((u) => ({ ...u, password: undefined })));
+    try {
+      const users = await storage.getTopUsersByWins(20);
+      res.json(users.map((u) => ({ ...u, password: undefined })));
+    } catch (error) {
+      console.error("Leaderboard wins fetch error:", error);
+      res.json([]);
+    }
   });
 
   // ==================== BADGES ROUTES ====================
 
   app.get("/api/badges", async (req, res) => {
-    const badges = await storage.getAllBadges();
-    res.json(badges);
+    try {
+      const badges = await storage.getAllBadges();
+      res.json(badges);
+    } catch (error) {
+      console.error("Badges fetch error:", error);
+      res.json([]);
+    }
   });
 
   app.get("/api/badges/user", requireAuth, async (req, res) => {
