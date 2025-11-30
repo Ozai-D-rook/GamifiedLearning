@@ -2,7 +2,8 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Zap, Users, Trophy, Brain, Gamepad2, Sparkles } from "lucide-react";
+import { Users, Trophy, Brain, Gamepad2, Sparkles, Zap } from "lucide-react";
+import logoImg from "@assets/image_1764530917836.png";
 
 export default function LandingPage() {
   return (
@@ -11,10 +12,8 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <Zap className="h-6 w-6 text-primary-foreground" />
-            </div>
-            <span className="font-display text-xl font-bold" data-testid="text-logo">QuizBlitz BY JUSTINA GARBA</span>
+            <img src={logoImg} alt="QuizBlitz Logo" className="h-10 w-auto" data-testid="img-logo" />
+            <span className="font-display text-xl font-bold" data-testid="text-logo">BY JUSTINA GARBA</span>
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />
